@@ -1,4 +1,4 @@
-package com.go.conowithme.common.entity;
+package com.go.conowithme.infrastructure.common.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
