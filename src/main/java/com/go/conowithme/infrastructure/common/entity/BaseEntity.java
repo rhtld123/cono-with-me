@@ -22,12 +22,14 @@ public abstract class BaseEntity {
     private Long id;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(name = "created_at", updatable = false, columnDefinition = "datetime")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Column(name = "updated_at", columnDefinition = "datetime")
     private LocalDateTime updatedAt;
 
+    @Column(name = "deleted_at", columnDefinition = "datetime")
     private LocalDateTime deletedAt;
 
     public void delete() {
