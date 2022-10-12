@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+
     @PostMapping("/api/v1/users")
-    @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<?> signup(@RequestBody @Valid UserSignupRequest request) {
         userService.signup(UserSignupDto.of(request.email(),request.password(), request.name(), request.nickname()));
         return ResponseEntity.ok()
