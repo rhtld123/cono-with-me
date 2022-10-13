@@ -2,8 +2,10 @@ package com.go.conowithme.api.user.service;
 
 import com.go.conowithme.api.user.domain.entity.UserEntity;
 import com.go.conowithme.api.user.exception.UserNotFoundException;
+import com.go.conowithme.api.user.service.dto.UserLoginDto;
 import com.go.conowithme.api.user.service.dto.UserSignupDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,11 +14,14 @@ public class UserService {
 
     private final UserQueryService userQueryService;
     private final UserCommandService userCommandService;
+    private final PasswordEncoder passwordEncoder;
 
     public void signup(UserSignupDto userSignupDto) {
         validateAlreadySignupUser(userSignupDto.getEmail());
         userCommandService.save(createUserEntity(userSignupDto));
     }
+
+
 
     private void validateAlreadySignupUser(String email) {
         if (findByEmailAndDeletedAtIsNull(email) != null) {
@@ -37,5 +42,4 @@ public class UserService {
             userSignupDto.getName(), userSignupDto.getNickname());
         return userEntity;
     }
-
 }

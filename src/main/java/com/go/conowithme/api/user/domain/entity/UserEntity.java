@@ -3,14 +3,15 @@ package com.go.conowithme.api.user.domain.entity;
 import com.go.conowithme.infrastructure.common.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @Table(
     name = "users",
