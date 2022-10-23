@@ -1,4 +1,4 @@
-package com.go.conowithme.infrastructure.config;
+package com.go.conowithme.infrastructure.config.swagger;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 

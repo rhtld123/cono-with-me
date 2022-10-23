@@ -13,7 +13,6 @@ public class PasswordConverter implements AttributeConverter<String, String> {
 
     private final PasswordEncoder passwordEncoder;
 
-
     @Override
     public String convertToDatabaseColumn(String attribute) {
         return passwordEncoder.encode(attribute);

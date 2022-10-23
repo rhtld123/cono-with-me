@@ -18,6 +18,9 @@ spring:
       ddl-auto: create
     properties:
       format_sql: true
+  redis:
+    host: localhost
+    port: 6379
 
 
 management:
@@ -36,3 +39,13 @@ springdoc:
     groups-order: DESC
     enabled: true
     operations-sorter: method
+
+jwt:
+  access-token-expire-time: 1800
+  refresh-token-expire-time: 604800
+  secret: 8a4634a0f6cf43788b21a7af092bf6df7db1856b42f890d9935b2e1e52e7a8b4f14ee8dfe538cb089b62c819be923e2b4beaaab50767cde7808f2a23650c7577
+
+
+logging:
+  level:
+    org.hibernate.type: trace
