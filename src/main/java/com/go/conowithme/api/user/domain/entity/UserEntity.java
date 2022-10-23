@@ -4,6 +4,8 @@ import com.go.conowithme.infrastructure.common.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -39,15 +41,22 @@ public class UserEntity extends BaseEntity {
     private String name;
     @Column(name = "nickname", length = 100)
     private String nickname;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
 
-    private UserEntity(String email, String password, String name, String nickname) {
+
+    private UserEntity(String email, String password, String name, String nickname,
+        Authority authority) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.nickname = nickname;
+        this.authority = authority;
     }
 
-    public static UserEntity of(String email, String password, String name, String nickname) {
-        return new UserEntity(email, password, name, nickname);
+    public static UserEntity of(String email, String password, String name, String nickname,
+        Authority authority) {
+        return new UserEntity(email, password, name, nickname, authority);
     }
 }

@@ -1,5 +1,7 @@
-package com.go.conowithme.infrastructure.config;
+package com.go.conowithme.infrastructure.config.security;
 
+import com.go.conowithme.infrastructure.jwt.JwtFilter;
+import com.go.conowithme.infrastructure.jwt.JwtTokenProvider;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -18,6 +21,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtTokenProvider tokenProvider;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,7 +56,12 @@ public class SecurityConfig {
             .antMatchers("/api-spec/**").permitAll()
             .anyRequest().permitAll()
             .and()
-            .formLogin().disable();
+            .exceptionHandling()
+            .accessDeniedHandler(jwtAccessDeniedHandler)
+            .authenticationEntryPoint(customAuthenticationEntryPoint)
+            .and()
+            .formLogin().disable()
+            .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
