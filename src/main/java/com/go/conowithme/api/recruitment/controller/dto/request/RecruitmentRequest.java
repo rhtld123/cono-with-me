@@ -1,6 +1,7 @@
 package com.go.conowithme.api.recruitment.controller.dto.request;
 
 import com.go.conowithme.api.recruitment.domain.entity.Genre;
+import com.go.conowithme.api.recruitment.domain.entity.RecruitmentEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -35,4 +36,8 @@ public class RecruitmentRequest {
     @Schema(description = "선호 장르")
     @NotNull
     private Genre genre;
+
+    public RecruitmentEntity toEntity(Long userId) {
+        return RecruitmentEntity.of(userId, title, content, startedAt, expiredAt, place, participant, genre);
+    }
 }
