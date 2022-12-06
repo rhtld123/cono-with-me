@@ -42,3 +42,9 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar {
+	archivesBaseName = 'cono'
+	archiveFileName = 'cono.jar'
+	archiveVersion = "0.0.1"
+}

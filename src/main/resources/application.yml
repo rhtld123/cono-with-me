@@ -49,3 +49,11 @@ jwt:
 logging:
   level:
     org.hibernate.type: trace
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import: file:/app/config/backend/application.yml
