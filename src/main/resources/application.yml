@@ -56,4 +56,4 @@ spring:
   config:
     activate:
       on-profile: prod
-    import: file:/app/config/backend/application.yml
+    import: file:/home/cicd/application.yml
