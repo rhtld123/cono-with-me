@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class ConoWithMeApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(ConoWithMeApplication.class, args);
 	}
 
