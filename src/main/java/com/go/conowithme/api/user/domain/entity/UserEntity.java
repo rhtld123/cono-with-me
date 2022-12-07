@@ -35,7 +35,7 @@ public class UserEntity extends BaseEntity {
     @Column(name = "email", length = 100)
     private String email;
     @Convert(converter = PasswordConverter.class)
-    @Column(name = "password", length = 255)
+    @Column(name = "password")
     private String password;
     @Column(name = "name", length = 100)
     private String name;
