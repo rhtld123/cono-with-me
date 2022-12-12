@@ -37,7 +37,4 @@ public class RecruitmentRequest {
     @NotNull
     private Genre genre;
 
-    public RecruitmentEntity toEntity(Long userId) {
-        return RecruitmentEntity.of(userId, title, content, startedAt, expiredAt, place, participant, genre);
-    }
 }
