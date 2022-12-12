@@ -11,14 +11,14 @@ import java.util.List;
 public class RecruitmentPagingResponse {
     @Schema(description = "조회 결과 상세 내역")
     private List<RecruitmentDto> recruitmentDto;
-    @Schema(description = "현재 페이지")
-    private long currentPage;
+    @Schema(description = "현재 페이지의 항목 개수")
+    private long numberOfElements;
     @Schema(description = "모든 페이지의 수")
     private long totalElements;
 
-    private RecruitmentPagingResponse(List<RecruitmentDto> recruitmentDto, long currentPage, long totalElements) {
+    private RecruitmentPagingResponse(List<RecruitmentDto> recruitmentDto, long numberOfElements, long totalElements) {
         this.recruitmentDto = recruitmentDto;
-        this.currentPage = currentPage;
+        this.numberOfElements = numberOfElements;
         this.totalElements = totalElements;
     }
 

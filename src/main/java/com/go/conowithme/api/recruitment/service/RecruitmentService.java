@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class RecruitmentService {
+
     private final RecruitmentRepository recruitmentRepository;
 
     public RecruitmentPagingResponse findAllPaging(int page, int size) {
