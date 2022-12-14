@@ -74,7 +74,7 @@ public class RecruitmentEntity extends BaseEntity {
     }
 
     public void update(InputRecruitmentRequest request, Long userId) {
-        Assert.isNull(request, "요청 항목이 비어있어 수정할 수 없습니다.");
+        Assert.notNull(request, "요청 항목이 비어있어 수정할 수 없습니다.");
         this.title = request.getTitle();
         this.content = request.getContent();
         this.startedAt = request.getStartedAt();

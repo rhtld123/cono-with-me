@@ -48,6 +48,7 @@ public class RecruitmentService {
     @Transactional
     public RecruitmentDto update(Long recruitmentId, InputRecruitmentRequest request, Long userId) throws RecruitmentNotFoundException {
         RecruitmentEntity recruitmentEntity = getRecruitment(recruitmentId);
+        validateRecruitmentOwner(recruitmentEntity, userId);
         recruitmentEntity.update(request, userId);
         return RecruitmentDto.from(recruitmentRepository.save(recruitmentEntity));
     }
@@ -57,7 +58,7 @@ public class RecruitmentService {
     }
 
     private RecruitmentEntity getRecruitment(Long recruitmentId) throws RecruitmentNotFoundException {
-        return recruitmentRepository.findById(recruitmentId).orElseThrow(RecruitmentNotFoundException::thrown);
+        return recruitmentRepository.findByIdAndDeletedAtIsNull(recruitmentId).orElseThrow(RecruitmentNotFoundException::thrown);
     }
 
     private void validateRecruitmentOwner(RecruitmentEntity recruitment, Long userId) {
