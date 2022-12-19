@@ -1,7 +1,7 @@
 package com.go.conowithme.infrastructure.config;
 
+import com.go.conowithme.api.recruitment.service.exception.RecruitmentNotFoundException;
 import com.go.conowithme.api.user.exception.UserNotFoundException;
-import javax.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,36 +12,44 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
+
 @ControllerAdvice
 public class CommonExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> userNotFoundException(UserNotFoundException e, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            .body(new ErrorDto(e.getMessage(), request.getRequestURI(), request.getMethod()));
+                .body(new ErrorDto(e.getMessage(), request.getRequestURI(), request.getMethod()));
     }
 
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<?> illegalStateException(IllegalStateException e, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body(new ErrorDto(e.getMessage(), request.getRequestURI(), request.getMethod()));
+                .body(new ErrorDto(e.getMessage(), request.getRequestURI(), request.getMethod()));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> illegalArgumentException(IllegalArgumentException e, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body(new ErrorDto(e.getMessage(), request.getRequestURI(), request.getMethod()));
+                .body(new ErrorDto(e.getMessage(), request.getRequestURI(), request.getMethod()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> methodArgumentNotValidExcepton(MethodArgumentNotValidException e, HttpServletRequest request) {
+    public ResponseEntity<?> methodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
         String message = e.getBindingResult()
-            .getAllErrors()
-            .get(0)
-            .getDefaultMessage();
+                .getAllErrors()
+                .get(0)
+                .getDefaultMessage();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body(new ErrorDto(message,  request.getRequestURI(), request.getMethod()));
+                .body(new ErrorDto(message, request.getRequestURI(), request.getMethod()));
+    }
+
+    @ExceptionHandler(RecruitmentNotFoundException.class)
+    public ResponseEntity<?> recruitmentNotFoundException(RecruitmentNotFoundException e, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorDto(e.getMessage(), request.getRequestURI(), request.getMethod()));
     }
 
     @Getter

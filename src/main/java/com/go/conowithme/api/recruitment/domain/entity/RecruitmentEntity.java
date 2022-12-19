@@ -1,20 +1,17 @@
 package com.go.conowithme.api.recruitment.domain.entity;
 
+import com.go.conowithme.api.recruitment.service.dto.InputRecruitmentRequest;
 import com.go.conowithme.infrastructure.common.entity.BaseEntity;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import io.jsonwebtoken.lang.Assert;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -74,5 +71,17 @@ public class RecruitmentEntity extends BaseEntity {
     public void addRequest(RecruitmentRequestEntity requestEntity) {
         requestEntity.addRecruitment(this);
         this.requests.add(requestEntity);
+    }
+
+    public void update(InputRecruitmentRequest request, Long userId) {
+        Assert.notNull(request, "요청 항목이 비어있어 수정할 수 없습니다.");
+        this.title = request.getTitle();
+        this.content = request.getContent();
+        this.startedAt = request.getStartedAt();
+        this.expiredAt = request.getExpiredAt();
+        this.place = request.getPlace();
+        this.participant = request.getParticipant();
+        this.genre = request.getGenre();
+        this.userId = userId;
     }
 }
