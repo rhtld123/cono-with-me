@@ -41,7 +41,7 @@ public class RecruitmentController {
             }
     )
     @GetMapping("/api/v1/recruitments")
-    public ResponseEntity<?> findAll(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    public ResponseEntity<RecruitmentPagingResponse> findAll(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
         return ResponseEntity.ok()
                 .body(recruitmentService.findAllPaging(page, size));
     }
@@ -57,7 +57,7 @@ public class RecruitmentController {
             }
     )
     @GetMapping("/api/v1/recruitments/{recruitmentId}")
-    public ResponseEntity<?> findByRecruitmentId(@PathVariable(name = "recruitmentId") Long recruitmentId) throws RecruitmentNotFoundException {
+    public ResponseEntity<RecruitmentDto> findByRecruitmentId(@PathVariable(name = "recruitmentId") Long recruitmentId) throws RecruitmentNotFoundException {
         return ResponseEntity.ok()
                 .body(recruitmentService.findById(recruitmentId));
     }
@@ -72,7 +72,7 @@ public class RecruitmentController {
             }
     )
     @PostMapping("/api/v1/recruitments")
-    public ResponseEntity<?> addRecruitment(@Valid @RequestBody RecruitmentRequest request, @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
+    public ResponseEntity<Void> addRecruitment(@Valid @RequestBody RecruitmentRequest request, @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
         InputRecruitmentRequest inputRecruitmentRequest = InputRecruitmentRequest.of(request.getTitle(),
                 request.getContent(),
                 request.getStartedAt(),
@@ -96,7 +96,7 @@ public class RecruitmentController {
             }
     )
     @PutMapping("/api/v1/recruitments/{recruitmentId}")
-    public ResponseEntity<?> updateRecruitment(@PathVariable(name = "recruitmentId") Long recruitmentId, @Valid @RequestBody RecruitmentRequest request, @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) throws RecruitmentNotFoundException {
+    public ResponseEntity<RecruitmentDto> updateRecruitment(@PathVariable(name = "recruitmentId") Long recruitmentId, @Valid @RequestBody RecruitmentRequest request, @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) throws RecruitmentNotFoundException {
         InputRecruitmentRequest inputRecruitmentRequest = InputRecruitmentRequest.of(request.getTitle(),
                 request.getContent(),
                 request.getStartedAt(),
@@ -119,7 +119,7 @@ public class RecruitmentController {
             }
     )
     @DeleteMapping("/api/v1/recruitments/{recruitmentId}")
-    public ResponseEntity<?> deleteRecruitment(@PathVariable(name = "recruitmentId") Long recruitmentId, @AuthenticationPrincipal UserDetails user) throws RecruitmentNotFoundException {
+    public ResponseEntity<Void> deleteRecruitment(@PathVariable(name = "recruitmentId") Long recruitmentId, @AuthenticationPrincipal UserDetails user) throws RecruitmentNotFoundException {
         recruitmentService.delete(recruitmentId, Long.valueOf(user.getUsername()));
         return ResponseEntity.ok()
                 .body(null);
