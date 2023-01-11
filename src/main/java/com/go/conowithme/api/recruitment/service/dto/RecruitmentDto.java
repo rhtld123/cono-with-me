@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RecruitmentDto {
+    @Schema(description = "글 Id")
+    private Long id;
     @Schema(description = "유저 ID")
     private Long userId;
     @Schema(description = "제목")
@@ -29,7 +31,8 @@ public class RecruitmentDto {
     @Schema(description = "장르")
     private Genre genre;
 
-    private RecruitmentDto(Long userId, String title, String content, LocalDateTime startedAt, LocalDateTime expiredAt, String place, int participant, Genre genre) {
+    private RecruitmentDto(Long id, Long userId, String title, String content, LocalDateTime startedAt, LocalDateTime expiredAt, String place, int participant, Genre genre) {
+        this.id = id;
         this.userId = userId;
         this.title = title;
         this.content = content;
@@ -41,6 +44,6 @@ public class RecruitmentDto {
     }
 
     public static RecruitmentDto from(RecruitmentEntity entity) {
-        return new RecruitmentDto(entity.getUserId(), entity.getTitle(), entity.getContent(), entity.getStartedAt(), entity.getExpiredAt(), entity.getPlace(), entity.getParticipant(), entity.getGenre());
+        return new RecruitmentDto(entity.getId(), entity.getUserId(), entity.getTitle(), entity.getContent(), entity.getStartedAt(), entity.getExpiredAt(), entity.getPlace(), entity.getParticipant(), entity.getGenre());
     }
 }
