@@ -1,22 +1,17 @@
 package com.go.conowithme.api.recruitment.domain.entity;
 
 import com.go.conowithme.infrastructure.common.entity.BaseEntity;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
 @Getter
 @Entity
-@Table(name = "recruitment_requests")
+@Table(name = "recruitment_participations")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RecruitmentRequestEntity extends BaseEntity {
+public class RecruitmentParticipationEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "recruitment_id")
@@ -28,13 +23,13 @@ public class RecruitmentRequestEntity extends BaseEntity {
     @Column(name = "comment")
     private String comment;
 
-    private RecruitmentRequestEntity(Long userId, String comment) {
+    private RecruitmentParticipationEntity(Long userId, String comment) {
         this.userId = userId;
         this.comment = comment;
     }
 
-    public static RecruitmentRequestEntity of(Long userId, String comment) {
-        return new RecruitmentRequestEntity(userId, comment);
+    public static RecruitmentParticipationEntity of(Long userId, String comment) {
+        return new RecruitmentParticipationEntity(userId, comment);
     }
 
     public void addRecruitment(RecruitmentEntity recruitment) {

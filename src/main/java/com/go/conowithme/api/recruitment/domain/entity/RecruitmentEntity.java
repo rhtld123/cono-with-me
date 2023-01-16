@@ -46,7 +46,7 @@ public class RecruitmentEntity extends BaseEntity {
 
     @BatchSize(size = 1000)
     @OneToMany(mappedBy = "recruitment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RecruitmentRequestEntity> requests = new ArrayList<>();
+    private List<RecruitmentParticipationEntity> recruitmentParticipations = new ArrayList<>();
 
     private RecruitmentEntity(Long userId, String title, String content,
         LocalDateTime startedAt, LocalDateTime expiredAt, String place, int participant,
@@ -68,9 +68,13 @@ public class RecruitmentEntity extends BaseEntity {
             participant, genre);
     }
 
-    public void addRequest(RecruitmentRequestEntity requestEntity) {
-        requestEntity.addRecruitment(this);
-        this.requests.add(requestEntity);
+    public void addParticipation(RecruitmentParticipationEntity recruitmentParticipationEntity) {
+        recruitmentParticipationEntity.addRecruitment(this);
+        this.recruitmentParticipations.add(recruitmentParticipationEntity);
+    }
+
+    public void deleteParticipation(RecruitmentParticipationEntity recruitmentParticipationEntity) {
+        this.recruitmentParticipations.remove(recruitmentParticipationEntity);
     }
 
     public void update(InputRecruitmentRequest request, Long userId) {
