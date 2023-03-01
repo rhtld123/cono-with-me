@@ -3,6 +3,7 @@ package com.go.conowithme.api.recruitment.controller;
 import com.go.conowithme.api.recruitment.controller.dto.request.RecruitmentParticipationRequest;
 import com.go.conowithme.api.recruitment.service.RecruitmentParticipationService;
 import com.go.conowithme.api.recruitment.service.dto.RecruitmentParticipationDto;
+import com.go.conowithme.api.recruitment.service.dto.RecruitmentParticipationSliceResponse;
 import com.go.conowithme.api.recruitment.service.exception.RecruitmentNotFoundException;
 import com.go.conowithme.api.recruitment.service.exception.RecruitmentParticipationNotFoundException;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,8 +24,8 @@ public class RecruitmentParticipationController {
     private final RecruitmentParticipationService recruitmentParticipationService;
 
     @GetMapping("/api/v1/recruitment/{recruitmentId}/request")
-    public ResponseEntity<RecruitmentParticipationDto> findByRecruitmentId(@PathVariable("recruitmentId") Long recruitmentId, @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) throws RecruitmentNotFoundException, RecruitmentParticipationNotFoundException {
-        return ResponseEntity.ok(recruitmentParticipationService.findByRecruitmentId(recruitmentId, Long.valueOf(user.getUsername())));
+    public ResponseEntity<RecruitmentParticipationDto> findByRecruitmentIdAndUserId(@PathVariable("recruitmentId") Long recruitmentId, @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) throws RecruitmentNotFoundException, RecruitmentParticipationNotFoundException {
+        return ResponseEntity.ok(recruitmentParticipationService.findByRecruitmentIdAndUserId(recruitmentId, Long.valueOf(user.getUsername())));
     }
 
     @PostMapping("/api/v1/recruitment/{recruitmentId}/requests")
@@ -37,5 +38,10 @@ public class RecruitmentParticipationController {
     public ResponseEntity<Void> deleteRequest(@PathVariable("recruitmentId") Long recruitmentId, @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) throws RecruitmentNotFoundException, RecruitmentParticipationNotFoundException {
         recruitmentParticipationService.delete(recruitmentId, Long.valueOf(user.getUsername()));
         return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/api/v1/recruitment/{recruitmentId}/requests")
+    public ResponseEntity<RecruitmentParticipationSliceResponse> findAllByRecruitmentId(@PathVariable("recruitmentId") Long recruitmentId, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+        return ResponseEntity.ok(recruitmentParticipationService.findAllByRecruitmentId(recruitmentId, page, size));
     }
 }
